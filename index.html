@@ -2,18 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Olympics Through The Years</title>
+    <title>Olympics History Through The Years</title>
     <script src="https://d3js.org/d3.v4.js"></script>
     <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
     <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
     <script src="main.js"></script>
 </head>
 <body>
-<!-- Create an element where the map will take place -->
-<svg id="my_dataviz" width="1500" height="1125"></svg>
-
+    <h1>Olympics History Through The Years</h1>
+    <h3>Date</h3>
+    <div style=" display: flex; justify-content: center; align-items: center;">
+        <!-- Create an element where the map will take place -->
+        <svg id="my_dataviz"  width="1200" height=900></svg>
+    </div>
 <script>
-
+    d3.csv()
     // The svg
     var svg = d3.select("svg"),
         width = +svg.attr("width"),
