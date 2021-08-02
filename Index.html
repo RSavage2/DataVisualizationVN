@@ -10,12 +10,11 @@
 
 </head>
 <body>
-<h1>The worlds population and life expectancy</h1>
+<h1>The worlds population and life expectancy by continent and country</h1>
 <!-- Create a div where the graph will take place -->
 <div id="my_dataviz"></div>
 
-<a href="#" class="previous">&laquo; Previous</a>
-<a href="#" class="next">Next &raquo;</a>
+<a href="https://rsavage2.github.io/DataVisualizationVN/scatter.html" class="next">Next &raquo;</a>
 
 <!-- A bit of CSS: change stroke color of circle on hover (white -> black) -->
 <style>
@@ -70,7 +69,7 @@ var svg = d3.select("#my_dataviz")
           "translate(" + margin.left + "," + margin.top + ")");
 
 //Read the data
-d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/4_ThreeNum.csv", function(data) {
+d3.csv("https://raw.githubusercontent.com/RSavage2/DataVisualizationVN/main/data/4_ThreeNum.csv", function(data) {
 
   // Add X axis
   var x = d3.scaleLinear()

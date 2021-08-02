@@ -10,12 +10,12 @@
     <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 </head>
 <body>
-<h1>Life expectancy and GDP per Cap by Continent</h1>
+<h1>The worlds population and life expectancy by continent and country</h1>
 
 <div id="my_dataviz"></div>
 
-<a href="#" class="previous">&laquo; Previous</a>
-<a href="#" class="next">Next &raquo;</a>
+<a href="https://rsavage2.github.io/DataVisualizationVN/Index.html" class="previous">&laquo; Previous</a>
+<a href="https://rsavage2.github.io/DataVisualizationVN/circlepacking.html" class="next">Next &raquo;</a>
 
 
 <style>
@@ -67,7 +67,7 @@ var svg = d3.select("#my_dataviz")
           "translate(" + margin.left + "," + margin.top + ")");
 
 //Read the data
-d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/4_ThreeNum.csv", function(data) {
+d3.csv("https://raw.githubusercontent.com/RSavage2/DataVisualizationVN/main/data/4_ThreeNum.csv", function(data) {
 
   // Add X axis
   var x = d3.scaleLinear()

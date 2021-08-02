@@ -11,10 +11,10 @@
 
 </head>
 <body>
+<h1>The worlds population and life expectancy by continent and country</h1>
 <div id="my_dataviz"></div>
 
-<a href="#" class="previous">&laquo; Previous</a>
-<a href="#" class="next">Next &raquo;</a>
+<a href="https://rsavage2.github.io/DataVisualizationVN/scatter.html" class="previous">&laquo; Previous</a>
 
 <style>
 .node:hover{
@@ -57,7 +57,7 @@ var svg = d3.select("#my_dataviz")
     .attr("height", height)
 
 // Read data
-d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/4_ThreeNum.csv", function(data) {
+d3.csv("https://raw.githubusercontent.com/RSavage2/DataVisualizationVN/main/data/4_ThreeNum.csv", function(data) {
 
   // Filter a bit the data -> more than 1 million inhabitants
   data = data.filter(function(d){ return d.pop > 300000})
