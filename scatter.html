@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bar Graph</title>
+
+    <!-- Load d3.js -->
+    <script src="https://d3js.org/d3.v4.js"></script>
+    <!-- Load color scale -->
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+</head>
+<body>
+<h1>Life expectancy and GDP per Cap by Continent</h1>
+
+<div id="my_dataviz"></div>
+
+<a href="#" class="previous">&laquo; Previous</a>
+<a href="#" class="next">Next &raquo;</a>
+
+
+<style>
+.bubbles {
+  stroke-width: 1px;
+  stroke: black;
+  opacity: .8
+}
+.bubbles:hover {
+  stroke: black;
+}
+
+a {
+  text-decoration: none;
+  display: inline-block;
+  padding: 8px 16px;
+}
+
+a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.previous {
+  background-color: #f1f1f1;
+  color: black;
+}
+
+.next {
+  background-color: #04AA6D;
+  color: white;
+}
+</style>
+
+<script>
+
+// set the dimensions and margins of the graph
+var margin = {top: 10, right: 30, bottom: 30, left: 60},
+    width = 1000 - margin.left - margin.right,
+    height = 420 - margin.top - margin.bottom;
+
+// append the svg object to the body of the page
+var svg = d3.select("#my_dataviz")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+//Read the data
+d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/4_ThreeNum.csv", function(data) {
+
+  // Add X axis
+  var x = d3.scaleLinear()
+    .domain([0, 50000])
+    .range([ 0, width/2 ]);
+  svg.append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x));
+
+  // text label for the x axis
+  svg.append("text")
+      .attr("transform",
+            "translate(" + (width/3) + " ," +
+                           (height + margin.top + 20) + ")")
+      .style("text-anchor", "middle")
+      .text("GDP Per Cap");
+
+  // Add Y axis
+  var y = d3.scaleLinear()
+    .domain([35, 90])
+    .range([ height, 0]);
+  svg.append("g")
+    .call(d3.axisLeft(y));
+
+ // text label for the y axis
+  svg.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 0 - margin.left)
+      .attr("x",0 - (height / 2))
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+      .text("Life Expectancy");
+
+  // Highlight the continent that is hovered
+  var highlight = function(d){
+
+    selected_continent = d.continent
+
+    d3.selectAll(".dot")
+      .transition()
+      .duration(200)
+      .style("fill", "lightgrey")
+      .attr("r", 3)
+
+    d3.selectAll("." + selected_continent)
+      .transition()
+      .duration(200)
+      .style("fill", color(selected_continent))
+      .attr("r", 7)
+  }
+
+  // Highlight the continent that is hovered
+  var doNotHighlight = function(){
+    d3.selectAll(".dot")
+      .transition()
+      .duration(200)
+      .style("fill", "lightgrey")
+      .attr("r", 5 )
+  }
+
+  // And when it is not hovered anymore
+  var noHighlight = function(d){
+    d3.selectAll(".bubbles").style("opacity", 1)
+  }
+
+  // Color scale: give me a specie name, I return a color
+  var color = d3.scaleOrdinal()
+    .domain(["Asia", "Europe", "Americas", "Africa", "Oceania"])
+    .range([ "#008000", "#0000FF", "#FF0000", "#FFD700", "#800080"])
+
+  // Add dots
+  svg.append('g')
+    .selectAll("dot")
+    .data(data)
+    .enter()
+    .append("circle")
+      .attr("class", function (d) { return "dot " + d.continent } )
+      .attr("cx", function (d) { return x(d.gdpPercap); } )
+      .attr("cy", function (d) { return y(d.lifeExp); } )
+      .attr("r", 5)
+      .style("fill", function (d) { return color(d.continent) } )
+    .on("mouseover", highlight)
+    .on("mouseleave", doNotHighlight )
+
+
+ // Add one dot in the legend for each name.
+    var size = 20
+    var allgroups = ["Asia", "Europe", "Americas", "Africa", "Oceania"]
+    svg.selectAll("myrect")
+      .data(allgroups)
+      .enter()
+      .append("circle")
+        .attr("cx", 550)
+        .attr("cy", function(d,i){ return 10 + i*(size+5)}) // 100 is where the first dot appears. 25 is the distance between dots
+        .attr("r", 7)
+        .style("fill", function(d){ return color(d)})
+        .on("mouseover", highlight)
+        .on("mouseleave", noHighlight)
+
+    // Add labels beside legend dots
+    svg.selectAll("mylabels")
+      .data(allgroups)
+      .enter()
+      .append("text")
+        .attr("x", 550 + size*.8)
+        .attr("y", function(d,i){ return i * (size + 5) + (size/2)}) // 100 is where the first dot appears. 25 is the distance between dots
+        .style("fill", function(d){ return color(d)})
+        .text(function(d){ return d})
+        .attr("text-anchor", "left")
+        .style("alignment-baseline", "middle")
+        .on("mouseover", highlight)
+        .on("mouseleave", noHighlight)
+
+})
+
+</script>
+</body>
+</html>
